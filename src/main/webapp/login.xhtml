@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+        >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+<h:head>
+    <title>Allezon</title>
+    <h:outputStylesheet name="main.css" library="css" />
+    <h:outputStylesheet name="css/bootstrap.css" library="bootstrap"/>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="h2">Sign in</h2>
+            </div>
+            <div class="card-body">
+                <h:form>
+                    <div class="form-group">
+                        <h:outputLabel for="username" class="label col-4 col-md-5 col-sm-5 col-lg-5 col-xl-4">Username :</h:outputLabel>
+                        <h:inputText value="#{loginRequest.username}" id="username" class="input col-8 col-md-7 col-sm-7 col-lg-7 col-xl-8">
+                            <f:validateLength for="username" minimum="3" maximum="50"/>
+                            <f:validateRequired for="username"/>
+                            <f:validateRegex for="username" pattern="^([a-z0-9]+(.)?[\s]*)$" />
+                        </h:inputText>
+                        <h:messages for="username" style="color:red;"/>
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel for="password" class="label col-4 col-md-5 col-sm-5 col-lg-5 col-xl-4">Password :</h:outputLabel>
+                        <h:inputSecret value="#{loginRequest.password}" id="password" area-descibedby="passHelp" class="input col-8 col-md-7 col-sm-7 col-lg-7 col-xl-8">
+                            <f:validateLength for="password" minimum="3" maximum="30"/>
+                            <f:validateRequired for="password" />
+                            <f:validateRegex for="password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])).*\w" />
+                        </h:inputSecret>
+                        <small id="passHelp" class="form-text text-muted">
+                            Must have at least one small letter, one big letter and one digit.
+                        </small>
+                        <h:messages for="password" style="color:red;"/>
+                    </div>
+
+                    <div class="form-group col-12 col-md-12 col-sm-12 col-lg-12 col-xl-12">
+                        <h:commandButton type="submit" class="btn btn-primary" action="#{loginRequest.ValidateUsernameAndPassword}" value="Sign in"/>
+                    </div>
+                </h:form>
+                <div class="card-footer">
+                    <span>Don't have an account?</span><a href="register.xhtml" class="link">Sign up</a>
+                </div>
+            </div>
+        </div>
+     </div>
+</h:body>
+</html>

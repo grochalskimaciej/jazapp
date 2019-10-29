@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+        >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+<h:head>
+    <title>Allezon</title>
+    <h:outputStylesheet name="main.css" library="css" />
+    <h:outputStylesheet name="css/bootstrap.css" library="bootstrap"/>
+</h:head>
+<h:body>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="h2">Registration</h2>
+            </div>
+            <div class="card-body">
+                <h:form>
+                    <div class="form-group">
+                        <h:outputLabel for="name" class="label col-4 col-md-5 col-sm-5 col-lg-5 col-xl-4">First name :</h:outputLabel>
+                        <h:inputText value="#{registerRequest.name}" name="name" id="name" area-descibedby="fnameHelp" class="input col-8 col-md-7 col-sm-7 col-lg-7 col-xl-8">
+                            <f:validateLength for="name" minimum="3" maximum="50"/>
+                            <f:validateRequired for="name"/>
+                            <f:validateRegex for="name" pattern="^([a-zA-Z]+(.)?[\s]*)$" />
+                        </h:inputText>
+                        <small id="fnameHelp" class="form-text text-muted">
+                            Must have (3-50) letters.
+                        </small>
+                        <h:messages for="name" style="color:red;"/>
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel for="surname" class="label col-4 col-md-5 col-sm-5 col-lg-5 col-xl-4">Last name :</h:outputLabel>
+                        <h:inputText value="#{registerRequest.surname}" id="surname" area-descibedby="snameHelp" class="input col-8 col-md-7 col-sm-7 col-lg-7 col-xl-8">
+                            <f:validateLength for="surname" minimum="3" maximum="50"/>
+                            <f:validateRequired for="surname" />
+                            <f:validateRegex for="surname" pattern="^([a-zA-Z]+(.)?[\s]*)$" />
+                        </h:inputText>
+                        <small id="snameHelp" class="form-text text-muted">
+                            Must have (3-50) letters.
+                        </small>
+                        <h:messages for="surname" style="color:red;"/>
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel for="username" class="label col-4 col-md-5 col-sm-5 col-lg-5 col-xl-4">Username :</h:outputLabel>
+                        <h:inputText value="#{registerRequest.username}" id="username" area-descibedby="usernameHelp" class="input col-8 col-md-7 col-sm-7 col-lg-7 col-xl-8">
+                            <f:validateLength for="username" minimum="3" maximum="30"/>
+                            <f:validateRequired for="username" />
+                            <f:validateRegex for="username" pattern="^([a-z0-9]+(.)?[\s]*)$" />
+                        </h:inputText>
+                        <small id="usernameHelp" class="form-text text-muted">
+                            Only small letters and numbers.
+                        </small>
+                        <h:messages for="username" style="color:red;"/>
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel for="password" class="label col-4 col-md-5 col-sm-5 col-lg-5 col-xl-4">Password :</h:outputLabel>
+                        <h:inputSecret value="#{registerRequest.password}" id="password" area-descibedby="passwordHelp" class="input col-8 col-md-7 col-sm-7 col-lg-7 col-xl-8">
+                            <f:validateLength for="password" minimum="5" maximum="30"/>
+                            <f:validateRequired for="password" />
+                            <f:validateRegex for="password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])).*\w"/>
+                        </h:inputSecret>
+                        <small id="passwordHelp" class="form-text text-muted">
+                            Must have at least one small letter, one big letter and one digit.
+                        </small>
+                        <h:messages for="password" style="color:red;"/>
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel for="confirmPassword" class="label col-4 col-md-5 col-sm-5 col-lg-5 col-xl-4">ConfPass :</h:outputLabel>
+                        <h:inputSecret value="#{registerRequest.confirmPassword}" id="confirmPassword" area-descibedby="confirmPasswordHelp" class="input col-8 col-md-7 col-sm-7 col-lg-7 col-xl-8">
+                            <f:validateLength for="confirmPassword" minimum="5" maximum="30"/>
+                            <f:validateRequired for="confirmPassword" />
+                            <f:validateRegex for="confirmPassword" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])).*\w"/>
+                        </h:inputSecret>
+                        <small id="confirmPasswordHelp" class="form-text text-muted">
+                            Confirm your password.
+                        </small>
+                        <h:messages for="confirmPassword" style="color:red;"/>
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel for="email" class="label col-4 col-md-5 col-sm-5 col-lg-5 col-xl-4">E-mail :</h:outputLabel>
+                        <h:inputText value="#{registerRequest.email}" id="email" area-descibedby="emailHelp" class="input col-8 col-md-7 col-sm-7 col-lg-7 col-xl-8">
+                            <f:validateRequired for="email" />
+                            <f:validateRegex for="email" pattern="^[a-zA-Z0-9.!#$%'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9]))+$"/>
+                        </h:inputText>
+                        <small id="emailHelp" class="form-text text-muted">
+                            aaaaaaa@bb.cc Just small letters
+                        </small>
+                        <h:messages for="email" style="color:red;"/>
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel for="date" class="label col-4 col-md-5 col-sm-5 col-lg-5 col-xl-4">Birthday : </h:outputLabel>
+                        <h:inputText value="#{registerRequest.date}" id="date" area-descibedby="dateHelp" class="input col-8 col-md-7 col-sm-7 col-lg-7 col-xl-8">
+                            <f:validateRequired for="date" />
+                            <f:validateRegex for="date" pattern="^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$"/>
+                        </h:inputText>
+                        <small id="dateHelp" class="form-text text-muted">
+                            Day/Month/Year
+                        </small>
+                        <h:messages for="date" style="color:red;"/>
+                    </div><br/>
+
+                    <div class="form-group col-12 col-md-12 col-sm-12 col-lg-12 col-xl-12">
+                        <h:commandButton type="submit" class="btn btn-primary" action="#{registerRequest.validatePassword}" value="Sign up" style="margin-right:8px;" />
+                        <h:commandButton type="reset" class="btn btn-danger" value="Reset"/>
+                    </div>
+                </h:form>
+            </div>
+            <div class="card-footer">
+                <span>You already have an account?</span><a href="login.xhtml" class="link">Sign in</a>
+            </div>
+        </div>
+    </div>
+</h:body>
+
+</html>
