@@ -11,7 +11,7 @@ public class DbConnect {
         try {
             Class.forName("org.postgresql.Driver");
             c = DriverManager
-              .getConnection("jdbc:postgresql://localhost:5432/jazapp", "user1", "sbd");
+              .getConnection("jdbc:postgresql://localhost:5432/jazapp", "jazapp", "jazapp!98");
             return c;
         } catch (Exception e) {
             e.printStackTrace();

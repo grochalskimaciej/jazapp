@@ -28,16 +28,18 @@ public class Authorization extends HttpFilter implements Filter {
 
                 String loginURL = request.getContextPath() + "/login.xhtml";
                 String registerURL = request.getContextPath() + "/register.xhtml";
+                String welcomeURL = request.getContextPath() + "/welcome.xhtml";
 
                 boolean loggedIn = (session != null) && (session.getAttribute("username") != null);
                 boolean loginRequest  = request.getRequestURI().equals(loginURL);
                 boolean registerRequest  = request.getRequestURI().equals(registerURL);
+                boolean welcomeRequest = request.getRequestURI().equals(welcomeURL);
                 boolean resourceRequest = request.getRequestURI().startsWith(request.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER + "/");
 
-                if(loggedIn || loginRequest || resourceRequest || registerRequest){
+                if(loggedIn || loginRequest || resourceRequest || registerRequest || welcomeRequest){
                     chain.doFilter(request,response);
                 } else {
-                    response.sendRedirect(loginURL);
+                    response.sendRedirect(welcomeURL);
                 }
         }
 

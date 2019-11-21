@@ -14,7 +14,7 @@
 
 <h:body>
     <h:form>
-        <p style="color:red; font-size: 24px;">Welcome #{loginRequest.username}</p>
+        <p style="color:red; font-size: 24px;">Welcome #{session.getAttribute("username")}</p>
         <h:commandButton action="#{loginRequest.logout}" value="Logout" style="color:red; width:80px;" />
     </h:form>
 </h:body>

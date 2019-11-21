@@ -4,17 +4,42 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
+@Entity
 @Named
 @RequestScoped
 public class RegisterRequest{
 
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        private Long id;
+
+//        @Column(name="forename")
+        @NotNull
         private String name;
+
+//        @Column(name="surname", nullable=false)
+        @NotNull
         private String surname;
+
+//        @Column(name="username", nullable=false)
+        @NotNull
         private String username;
+
+//        @Column(name="pass", nullable=false)
+        @NotNull
         private String password;
+
+//        @Column(name="email", nullable=false)
+        @NotNull
         private String email;
+
+//        @Column(name="registerdate", nullable=false)
+        @NotNull
         private String date;
+
         private String confirmPassword;
 
         public String getName() { return name; }

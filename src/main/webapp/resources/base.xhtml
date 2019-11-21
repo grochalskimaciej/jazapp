@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+        >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+<h:head>
+    <title>Allezon</title>
+    <h:outputStylesheet name="main.css" library="css" />
+    <h:outputStylesheet name="css/bootstrap.css" library="bootstrap"/>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <div class="card">
+
+            <ui:insert name="header">
+                <ui:include src="custom-header.xhtml"/>
+            </ui:insert>
+
+            <ui:insert name="content">
+                <ui:include src="custom-content.xhtml"/>
+            </ui:insert>
+
+            <ui:insert name="footer">
+                <ui:include src="custom-footer.xhtml"/>
+            </ui:insert>
+
+        </div>
+    </div>
+</h:body>
+
+</html>
