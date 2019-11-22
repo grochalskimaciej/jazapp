@@ -3,12 +3,12 @@
 CREATE TABLE jazapp
 (
 --     id BIGSERIAL NOT NULL,
-    forename VARCHAR(50)   NOT NULL,
-    surname VARCHAR(50)   NOT NULL,
-    username VARCHAR(30)   NOT NULL,
-    pass VARCHAR(30)   NOT NULL,
-    email VARCHAR(30)   NOT NULL,
-    registerdate VARCHAR(15)   NOT NULL
+    forename varchar NOT NULL,
+    surname varchar NOT NULL,
+    username varchar NOT NULL,
+    pass varchar NOT NULL,
+    email varchar NOT NULL,
+    registerdate varchar NOT NULL
 
 --     PRIMARY KEY (id)
 );

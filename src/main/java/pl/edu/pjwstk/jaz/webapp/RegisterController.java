@@ -1,5 +1,7 @@
 package pl.edu.pjwstk.jaz.webapp;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -22,11 +24,12 @@ public class RegisterController {
 
         if(notExists)
         {
+            String BCryptPassw = BCrypt.hashpw(p,BCrypt.gensalt());
 
             try {
                 assert c != null;
                 stat = c.createStatement();
-                stat.executeUpdate("INSERT INTO jazapp VALUES ('"+n+"','"+s+"','"+u+"','"+p+"','"+e+"','"+d+"')");
+                stat.executeUpdate("INSERT INTO jazapp VALUES ('"+n+"','"+s+"','"+u+"','"+BCryptPassw+"','"+e+"','"+d+"')");
 
                 c.close();
                 stat.close();

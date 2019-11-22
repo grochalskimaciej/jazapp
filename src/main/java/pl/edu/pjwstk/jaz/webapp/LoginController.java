@@ -1,5 +1,7 @@
 package pl.edu.pjwstk.jaz.webapp;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import java.sql.*;
@@ -15,6 +17,8 @@ public class LoginController{
             Statement stat;
             Connection c = DbConnect.getConnection();
 
+            var passwordEncoder = new BCryptPasswordEncoder();
+
             try {
                 assert c != null;
                 stat = c.createStatement();
@@ -23,7 +27,7 @@ public class LoginController{
                     String user = rs.getString("username");
                     String pass = rs.getString("pass");
 
-                    if (user.equals(username) && pass.equals(password)){
+                    if(passwordEncoder.matches(password, pass) && user.equals(username)){
                         rs.close();
                         c.close();
                         return true;
