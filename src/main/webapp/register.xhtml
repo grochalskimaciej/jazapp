@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core"
 >
 
 <h:head>
@@ -24,7 +24,7 @@
                 <h:form>
                     <div class="form-group">
                         <h:outputLabel for="name" class="label col-4 col-md-5 col-sm-5 col-lg-5 col-xl-4">First name :</h:outputLabel>
-                        <h:inputText value="#{registerRequest.name}" name="name" id="name" area-descibedby="fnameHelp" class="input col-8 col-md-7 col-sm-7 col-lg-7 col-xl-8">
+                        <h:inputText value="#{registerRequest.firstName}" name="name" id="name" area-descibedby="fnameHelp" class="input col-8 col-md-7 col-sm-7 col-lg-7 col-xl-8">
                             <f:validateLength for="name" minimum="3" maximum="50"/>
                             <f:validateRequired for="name"/>
                             <f:validateRegex for="name" pattern="^([a-zA-Z]+(.)?[\s]*)$" />
@@ -37,7 +37,7 @@
 
                     <div class="form-group">
                         <h:outputLabel for="surname" class="label col-4 col-md-5 col-sm-5 col-lg-5 col-xl-4">Last name :</h:outputLabel>
-                        <h:inputText value="#{registerRequest.surname}" id="surname" area-descibedby="snameHelp" class="input col-8 col-md-7 col-sm-7 col-lg-7 col-xl-8">
+                        <h:inputText value="#{registerRequest.lastName}" id="surname" area-descibedby="snameHelp" class="input col-8 col-md-7 col-sm-7 col-lg-7 col-xl-8">
                             <f:validateLength for="surname" minimum="3" maximum="50"/>
                             <f:validateRequired for="surname" />
                             <f:validateRegex for="surname" pattern="^([a-zA-Z]+(.)?[\s]*)$" />
@@ -55,6 +55,9 @@
                             <f:validateRequired for="username" />
                             <f:validateRegex for="username" pattern="^([a-z0-9]+(.)?[\s]*)$" />
                         </h:inputText>
+                        <c:if test="#{flash.containsKey('already-exists')}">
+                            <small class="form-text text-danger"><h:outputText value="#{flash['already-exists']}"/></small>
+                        </c:if>
                         <small id="usernameHelp" class="form-text text-muted">
                             Only small letters and numbers.
                         </small>
@@ -68,6 +71,9 @@
                             <f:validateRequired for="password" />
                             <f:validateRegex for="password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])).*\w"/>
                         </h:inputSecret>
+                        <c:if test="#{flash.containsKey('Wrong-password')}">
+                            <small class="form-text text-danger"><h:outputText value="#{flash['Wrong-password']}"/></small>
+                        </c:if>
                         <small id="passwordHelp" class="form-text text-muted">
                             Must have at least one small letter, one big letter and one digit.
                         </small>
@@ -112,7 +118,7 @@
                     </div><br/>
 
                     <div class="form-group col-12 col-md-12 col-sm-12 col-lg-12 col-xl-12">
-                        <h:commandButton type="submit" class="btn btn-primary" action="#{registerRequest.validatePassword}" value="Sign up" style="margin-right:8px;" />
+                        <h:commandButton type="submit" class="btn btn-primary" action="#{registerController.register}" value="Sign up" style="margin-right:8px;" />
                         <h:commandButton type="reset" class="btn btn-danger" value="Reset"/>
                     </div>
                 </h:form>
