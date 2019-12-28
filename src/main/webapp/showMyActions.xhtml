@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:head>
+        <title>Allezon</title>
+        <h:outputStylesheet name="main.css" library="css" />
+    </h:head>
+
+    <h:body>
+        <p style="color:red; font-size: 24px;">Welcome #{session.getAttribute("username")}</p>
+
+            <h:form>
+                <div style="text-align: center;"><h:outputLabel value="My Auction" style="align-self: center; font-size: large"/></div>
+
+                <h:dataTable var="auction" value="#{auctionController.myAuctionEntityList}" border="1" style="margin-left: auto; margin-right: auto;">
+                    <h:inputHidden>
+                        <h:column>
+                            #{auction.id}
+                        </h:column>
+                    </h:inputHidden>
+                    <div>
+                        <h:column style="align-self: center; font-size: large">
+                            #{auction.title}
+                        </h:column>
+                    </div>
+                    <div>
+                        <h:column style="align-self: center; font-size: large">
+                            #{auction.description}
+                        </h:column>
+                    </div>
+                    <div>
+                        <h:column style="align-self: center; font-size: large">
+                            #{auction.price}
+                        </h:column>
+                    </div>
+                    <div>
+                        <h:column style="align-self: center; font-size: large">
+                            #{auction.category.name}
+                        </h:column>
+                    </div>
+                    <div>
+                        <h:column style="align-self: center; font-size: large; padding: 0 5px;">
+                            <h:outputLabel value="section: " style="float:left; padding-right: 10px;"/>
+                            #{auction.category.section.name}
+                        </h:column>
+                    </div>
+                    <div>
+                        <h:column style="align-self: center; font-size: large">
+                            #{auction.owner.username}
+                        </h:column>
+                    </div>w
+                    <div>
+                        <h:column>
+                            <h:button value="Edit Section" outcome="changeSection.xhtml">
+                                <f:param name="sectionID" value="#{auction.category.getSection().id}"/>
+                            </h:button>
+                        </h:column>
+                    </div>
+                    <div>
+                        <h:column>
+                            <h:button value="Edit Auction" outcome="changeAuction.xhtml">
+                                <f:param name="auctionID" value="#{auction.id}"/>
+                            </h:button>
+                        </h:column>
+                    </div>
+                </h:dataTable>
+            </h:form>
+
+        <h:form>
+            <div class="card-footer">
+                <a href="index.xhtml" class="link">Back to profile page</a><br/>
+            </div>
+            <h:commandButton action="#{loginRequest.logout}" value="Logout" style="color:red; width:80px;" />
+        </h:form>
+    </h:body>
+</f:view>
+</html>

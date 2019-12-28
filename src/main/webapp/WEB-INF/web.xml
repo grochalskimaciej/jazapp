@@ -19,6 +19,13 @@
         <param-value>/resources/</param-value>
     </context-param>
 
+<!--TODO skasowac jesli nie zadziala-->
+    <context-param>
+        <param-name>javax.faces.WEBAPP_DIRECTORY</param-name>
+        <param-value>/webapp/</param-value>
+    </context-param>
+
+
         <welcome-file-list>
             <welcome-file>welcome.xhtml</welcome-file>
         </welcome-file-list>

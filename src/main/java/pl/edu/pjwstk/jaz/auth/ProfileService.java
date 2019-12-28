@@ -1,5 +1,8 @@
 package pl.edu.pjwstk.jaz.auth;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -19,16 +22,21 @@ public class ProfileService {
     @Inject
     private HttpServletRequest request;
 
-    private final DateFormat dateFormat =  new SimpleDateFormat("dd/MM/yyyy");
+//    private final DateFormat dateFormat =  new SimpleDateFormat("dd/MM/yyyy");
 
     public boolean logIn(String username, String password) {
-        if (isUsernameAndPasswordCorrect(username, password)) {
-            var session = request.getSession(true);
-            session.setAttribute("username", username);
+//        //TODO odkomentowac zakomentowane wywalic reszte
+//        if (isUsernameAndPasswordCorrect(username, password)) {
+//            var session = request.getSession(true);
+//            session.setAttribute("username", username);
+//
+//            return true;
+//        }
+//        return false;
 
-            return true;
-        }
-        return false;
+        var session = request.getSession(true);
+        session.setAttribute("username", username);
+        return true;
     }
 
     private boolean isUsernameAndPasswordCorrect(String username, String password) {
@@ -37,30 +45,45 @@ public class ProfileService {
             return false;
         }
         var user = userOptional.get();
+
+//        var passwordEncoder = new BCryptPasswordEncoder();
+//        String pass = user.getPassword();
+//
+//        if(passwordEncoder.matches(pass, password)){
+//            return user.getUsername().equals(username);
+//        }
+//
+//        if(passwordEncoder.encode(pass).equals(password)){
+//            return user.getUsername().equals(username);
+//        }
+//        return false;
+
         return user.getUsername().equals(username) && user.getPassword().equals(password);
     }
 
     public boolean doesUserExist(String username) {
-        //noinspection SimplifyOptionalCallChains // just for learning
-        return !profileRepository.findUserByUsername(username).isEmpty();
+        var userOptional = profileRepository.findUserByUsername(username);
+        return userOptional.isPresent();
     }
 
     public void addUser(String firstName, String lastName, String username, String password, String email, String birthday) {
+//        String BCryptPassw = BCrypt.hashpw(password,BCrypt.gensalt());
+
         var user = new User(firstName, lastName, username, password, email, birthday);
         profileRepository.addUser(user);
     }
 
-    private LocalDate parseDate(String dateAsText) {
-        try {
-            var parsedDate = dateFormat.parse(dateAsText);
-
-            return parsedDate.toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    private LocalDate parseDate(String dateAsText) {
+//        try {
+//            var parsedDate = dateFormat.parse(dateAsText);
+//
+//            return parsedDate.toInstant()
+//                    .atZone(ZoneId.systemDefault())
+//                    .toLocalDate();
+//        } catch (ParseException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
 //    @PostConstruct
 //    public void addTest() {

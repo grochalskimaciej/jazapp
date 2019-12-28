@@ -1,15 +1,12 @@
-package pl.edu.pjwstk.jaz.webapp;
+package pl.edu.pjwstk.jaz.login;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.edu.pjwstk.jaz.auth.ProfileService;
+import pl.edu.pjwstk.jaz.login.LoginRequest;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.sql.*;
-
-import java.sql.Statement;
 
 @Named
 @RequestScoped
@@ -23,10 +20,11 @@ public class LoginController{
 
     public String login(){
         if(profileService.logIn(loginRequest.getUsername(), loginRequest.getPassword())){
-            return "/index.xhtml?faces-redirect=true";
+            return "index";
         } else {
+            System.out.println("ntu");
             FacesContext.getCurrentInstance().getExternalContext().getFlash()
-                    .put("error-message", "Incorrect username or password");
+                    .put("error message", "Incorrect username or password");
             return "/login.xhtml?faces-redirect=true";
         }
     }

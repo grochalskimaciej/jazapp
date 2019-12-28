@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.jaz.webapp;
+package pl.edu.pjwstk.jaz.login;
 
 import pl.edu.pjwstk.jaz.auth.ProfileService;
 

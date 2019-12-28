@@ -10,5 +10,7 @@ CREATE TABLE jazapp
     email varchar NOT NULL,
     birthDate varchar NOT NULL,
 
+--     isAdmin boolean NOT NULL,
+
     PRIMARY KEY (id)
 );

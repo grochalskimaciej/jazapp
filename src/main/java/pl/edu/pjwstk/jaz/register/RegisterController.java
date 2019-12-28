@@ -26,13 +26,13 @@ public class RegisterController {
     public String register(){
         if(profileService.doesUserExist(registerRequest.getUsername())){
             FacesContext.getCurrentInstance().getExternalContext().getFlash()
-                    .put("already-exists", "Username already exists.");
+                    .put("already exists", "Username already exists.");
             return "register";
         }
 
         if(!registerRequest.getPassword().equals(registerRequest.getConfirmPassword())){
             FacesContext.getCurrentInstance().getExternalContext().getFlash()
-                    .put("Wrong-password", "Your password does not match");
+                    .put("Wrong password", "Your password does not match");
             return "register";
         }
 

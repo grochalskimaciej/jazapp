@@ -3,9 +3,12 @@
                 PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+
 >
 <h:head>
     <title>Allezon</title>
@@ -15,8 +18,17 @@
 <h:body>
     <h:form>
         <p style="color:red; font-size: 24px;">Welcome #{session.getAttribute("username")}</p>
-        <h:commandButton action="#{loginRequest.logout}" value="Logout" style="color:red; width:80px;" />
     </h:form>
+
+    <div class="card-footer">
+        <a href="addNewAuction.xhtml" class="link">Add Auction</a>
+        <a href="showMyActions.xhtml" class="link">Show my Auctions</a>
+        <a href="showAuctions.xhtml" class="link">Show all Auctions</a>
+        <a href="showAllSections.xhtml" class="link">Show all Sections</a>
+    </div>
+    <br/>
+    <h:commandButton action="#{loginRequest.logout}" value="Logout" style="color:red; width:80px;" />
+
 </h:body>
 
 </html>

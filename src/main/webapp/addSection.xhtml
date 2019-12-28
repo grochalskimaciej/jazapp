@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+
+>
+<f:view>
+<h:head>
+    <title>Allezon</title>
+    <h:outputStylesheet name="main.css" library="css" />
+</h:head>
+
+<h:body>
+    <h:form>
+        <h2>Add Section</h2>
+
+        <h:inputText value="#{auctionController.section.name}" name="section" a:placeholder="Add Section:"><f:validateRequired for="section"/></h:inputText><br/><br/>
+
+        <h:commandButton action="#{auctionController.saveSection}" value="Add Section" style="color:red; width:160px;" /><br/>
+    </h:form>
+
+    <h:form>
+        <div class="card-footer">
+            <a href="index.xhtml" class="link">Back to profile page</a><br/>
+        </div>
+        <h:commandButton action="#{loginRequest.logout}" value="Logout" style="color:red; width:80px;" />
+    </h:form>
+</h:body>
+</f:view>
+</html>
