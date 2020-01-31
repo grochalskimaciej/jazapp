@@ -32,6 +32,7 @@ public class AuctionController implements Serializable {
 
     private SectionEntity section;
     private AuctionEntity auction;
+    private CategoryEntity category;
 
     public List<PhotoEntity> getAllPhotos(){return auctionRepository.findAllPhotos();}
     public List<PhotoEntity> getMyPhotoEntityList() {
@@ -63,7 +64,6 @@ public class AuctionController implements Serializable {
 
         return section;
     }
-
     public String saveSection() {
         auctionRepository.saveSection(section);
 
@@ -76,7 +76,6 @@ public class AuctionController implements Serializable {
 
         return auction;
     }
-
     public String saveAuction() {
         auction = getAuction();
         auction.setTitle(auctionRequest.getTitle());
@@ -84,6 +83,18 @@ public class AuctionController implements Serializable {
         auction.setPrice(auctionRequest.getPrice());
 
         auctionRepository.saveAuction(auction);
+
+        return "index";
+    }
+
+    public CategoryEntity getCategory(){
+        if (id == null) { category = new CategoryEntity(); }
+        else { category = auctionRepository.findCategoryByID(id); }
+
+        return category;
+    }
+    public String saveCategory() {
+        auctionRepository.saveCategory(category);
 
         return "index";
     }

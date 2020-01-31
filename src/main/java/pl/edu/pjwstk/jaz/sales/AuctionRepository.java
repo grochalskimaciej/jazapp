@@ -22,6 +22,7 @@ public class AuctionRepository implements Serializable {
 
     public SectionEntity findSectionByID(Long sectionID) { return em.find(SectionEntity.class, sectionID); }
     public AuctionEntity findAuctionByID(Long auctionID) { return em.find(AuctionEntity.class, auctionID); }
+    public CategoryEntity findCategoryByID(Long categoryID) { return em.find(CategoryEntity.class, categoryID); }
 
     @Transactional
     public void deleteAuction(AuctionEntity auction){
@@ -38,6 +39,12 @@ public class AuctionRepository implements Serializable {
     public void saveAuction(AuctionEntity auction) {
         if (auction.getId() != null){ em.merge(auction); }
         else { em.persist(auction); }
+    }
+
+    @Transactional
+    public void saveCategory(CategoryEntity category) {
+        if (category.getId() != null){ em.merge(category); }
+        else { em.persist(category); }
     }
 
     @Transactional

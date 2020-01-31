@@ -69,6 +69,13 @@
                     </div>
                     <div>
                         <h:column>
+                            <h:button value="Edit Category" outcome="changeCategory.xhtml">
+                                <f:param name="categoryID" value="#{photo.auction.category.id}"/>
+                            </h:button>
+                        </h:column>
+                    </div>
+                    <div>
+                        <h:column>
                             <h:button value="Edit Section" outcome="changeSection.xhtml">
                                 <f:param name="sectionID" value="#{photo.auction.category.getSection().id}"/>
                             </h:button>
