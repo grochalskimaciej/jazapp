@@ -95,6 +95,15 @@ public class AuctionRepository implements Serializable {
         }
     }
 
+    @Transactional
+    public void addCategory() {
+        CategoryEntity categoryEntity = new CategoryEntity(auctionRequest.getCategoryName());
+        SectionEntity sectionEntity = new SectionEntity(auctionRequest.getSectionName());
+
+        categoryEntity.setSection(sectionEntity);
+        em.persist(categoryEntity);
+    }
+
     public List<SectionEntity> findAllSections() {
         return em.createQuery("FROM SectionEntity ", SectionEntity.class).getResultList();
     }

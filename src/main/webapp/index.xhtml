@@ -19,12 +19,13 @@
     <h:form>
         <p style="color:red; font-size: 24px;">Welcome #{session.getAttribute("username")}</p>
     </h:form>
-
+    <h:outputLabel value="#{flash['category']}" style="color: white"/>
     <div class="card-footer">
         <a href="addNewAuction.xhtml" class="link">Add Auction</a>
         <a href="showMyAuctions.xhtml" class="link">Show my Auctions</a>
         <a href="showAuctions.xhtml" class="link">Show all Auctions</a>
         <a href="showAllSections.xhtml" class="link">Show all Sections</a>
+        <a href="addCategory.xhtml" class="link">Click To Add Category</a><br/>
     </div>
     <br/>
     <h:form>

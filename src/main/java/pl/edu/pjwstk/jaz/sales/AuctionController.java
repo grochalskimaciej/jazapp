@@ -1,19 +1,11 @@
 package pl.edu.pjwstk.jaz.sales;
 
-import javax.annotation.ManagedBean;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 //@ManagedBean
@@ -106,14 +98,20 @@ public class AuctionController implements Serializable {
         auctionRepository.addAuction(sessionUsername);
         return "index";
     }
-
     public String deleteAuction(){
         auction = getAuction();
 
         auctionRepository.deleteAuction(auction);
         return "showMyAuctions";
     }
-    /////////////////////////////////////////////////////
+    public String addCategory(){
+        auctionRepository.addCategory();
+
+        FacesContext.getCurrentInstance().getExternalContext().getFlash()
+                .put("category", "category added succesfully");
+        return "index";
+    }
+    ////////////////////////////////////////////////////
 //    private List<AuctionRequest> uploadFiles = null;
 //
 //    @PostConstruct
