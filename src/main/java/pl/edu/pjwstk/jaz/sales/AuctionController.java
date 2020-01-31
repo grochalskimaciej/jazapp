@@ -1,12 +1,23 @@
 package pl.edu.pjwstk.jaz.sales;
 
+import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+//@ManagedBean
+//@SessionScoped
 @Named
 @RequestScoped
 public class AuctionController implements Serializable {
@@ -16,16 +27,28 @@ public class AuctionController implements Serializable {
     @Inject
     private AuctionRepository auctionRepository;
 
+    @Inject
+    private AuctionRequest auctionRequest;
+
     private SectionEntity section;
     private AuctionEntity auction;
 
-    public List<SectionEntity> getSectionEntityList() { return auctionRepository.findAllSections(); }
-    public List<AuctionEntity> getAuctionEntityList() { return auctionRepository.findAllAuctions(); }
-    public List<AuctionEntity> getMyAuctionEntityList() {
+    public List<PhotoEntity> getAllPhotos(){return auctionRepository.findAllPhotos();}
+    public List<PhotoEntity> getMyPhotoEntityList() {
         var session = request.getSession(false);
         String sessionUsername = (String)session.getAttribute("username");
-        return auctionRepository.findMyAuctions(sessionUsername);
+        return auctionRepository.findMyPhotos(sessionUsername);
     }
+    public List<SectionEntity> getSectionEntityList() { return auctionRepository.findAllSections(); }
+    public List<PhotoEntity> getMoreImages() {
+        return auctionRepository.moreImages();
+    }
+//    public List<AuctionEntity> getAuctionEntityList() { return auctionRepository.findAllAuctions(); }
+//    public List<AuctionEntity> getMyAuctionEntityList() {
+//        var session = request.getSession(false);
+//        String sessionUsername = (String)session.getAttribute("username");
+//        return auctionRepository.findMyAuctions(sessionUsername);
+//    }
 
     private Long id;
 
@@ -55,6 +78,11 @@ public class AuctionController implements Serializable {
     }
 
     public String saveAuction() {
+        auction = getAuction();
+        auction.setTitle(auctionRequest.getTitle());
+        auction.setDescription(auctionRequest.getDescription());
+        auction.setPrice(auctionRequest.getPrice());
+
         auctionRepository.saveAuction(auction);
 
         return "index";
@@ -67,6 +95,39 @@ public class AuctionController implements Serializable {
         auctionRepository.addAuction(sessionUsername);
         return "index";
     }
+
+    public String deleteAuction(){
+        auction = getAuction();
+
+        auctionRepository.deleteAuction(auction);
+        return "showMyAuctions";
+    }
+    /////////////////////////////////////////////////////
+//    private List<AuctionRequest> uploadFiles = null;
+//
+//    @PostConstruct
+//    public void init(){
+//        if(uploadFiles==null){
+//            uploadFiles = new ArrayList<AuctionRequest>();
+//        }
+//    }
+//
+//    public void uploadFiles() throws IOException, ServletException {
+//        Collection<Part> parts = getParts();
+//        for(Part part: parts){
+//            if(part.getSubmittedFileName()!=null){
+//                AuctionRequest fileBean = new AuctionRequest();
+//                fileBean.setFileName((part.getSubmittedFileName()));
+//                uploadFiles.add(fileBean);
+//            }
+//        }
+//    }
+//
+//    public Collection<Part> getParts() throws IOException, ServletException {
+//        FacesContext context = FacesContext.getCurrentInstance();
+//        HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
+//        return request.getParts();
+//    }
 
 //    @Transactional
 //    public List<AuctionEntity> getMyAuctionList() {
@@ -81,8 +142,8 @@ public class AuctionController implements Serializable {
 //
 //    @Transactional
 //    public String editAuction(){
-//        var session = request.getSession(false);  // *to jest ok*
-//        String sessionUsername = (String)session.getAttribute("username");  // *to tez jest ok*
+//        var session = request.getSession(false);
+//        String sessionUsername = (String)session.getAttribute("username");
 //
 //
 //        Query query = em.createQuery("SELECT u FROM ProfileEntity u WHERE u.username = :sessionUsername", ProfileEntity.class);

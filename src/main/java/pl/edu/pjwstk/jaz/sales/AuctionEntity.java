@@ -36,8 +36,10 @@ public class AuctionEntity implements Serializable {
         private CategoryEntity category;
 
         @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true, mappedBy = "auction")
-        @OrderColumn(name = "order")
         private List<PhotoEntity> photos;
+
+//        @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true, mappedBy = "auction")
+//        private List<AuctionParameterEntity> parameters;
 
         public AuctionEntity(){}
 
@@ -55,5 +57,6 @@ public class AuctionEntity implements Serializable {
         public void setCategory(CategoryEntity category) { this.category = category; }
         public List<PhotoEntity> getPhotos(){return photos;}
         public void setPhotos(List<PhotoEntity> photos) { this.photos = photos; }
-
+//        public List<AuctionParameterEntity> getParameters(){return parameters;}
+//        public void setParameters(List<AuctionParameterEntity> parameters){this.parameters = parameters;}
 }

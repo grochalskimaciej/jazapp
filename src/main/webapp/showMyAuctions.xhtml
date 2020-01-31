@@ -16,55 +16,75 @@
 
             <h:form>
                 <div style="text-align: center;"><h:outputLabel value="My Auction" style="align-self: center; font-size: large"/></div>
-
-                <h:dataTable var="auction" value="#{auctionController.myAuctionEntityList}" border="1" style="margin-left: auto; margin-right: auto;">
+                <h:dataTable var="photo" value="#{auctionController.myPhotoEntityList}" border="1" style="margin-left: auto; margin-right: auto;">
+                    <div>
+                        <h:column style="align-self: center; font-size: large">
+                            <div>
+                                <h:column style="align-self: center; font-size: large;">
+                                    <img alt="Show more" src="#{photo.link}" style="width: 45px; height: 45px;"/>
+                                </h:column>
+                            </div>
+                        </h:column>
+                    </div>
                     <h:inputHidden>
                         <h:column>
-                            #{auction.id}
+                            #{photo.auction.id}
                         </h:column>
                     </h:inputHidden>
                     <div>
                         <h:column style="align-self: center; font-size: large">
-                            #{auction.title}
+                            <h:outputLabel value="Title : " style="float:left; padding-right: 10px;"/>
+                            #{photo.auction.title}
                         </h:column>
                     </div>
                     <div>
                         <h:column style="align-self: center; font-size: large">
-                            #{auction.description}
+                            <h:outputLabel value="Description : " style="float:left; padding-right: 10px;"/>
+                            #{photo.auction.description}
                         </h:column>
                     </div>
                     <div>
                         <h:column style="align-self: center; font-size: large">
-                            #{auction.price}
+                            <h:outputLabel value="Price : " style="float:left; padding-right: 10px;"/>
+                            #{photo.auction.price}
                         </h:column>
                     </div>
                     <div>
                         <h:column style="align-self: center; font-size: large">
-                            #{auction.category.name}
+                            <h:outputLabel value="Category : " style="float:left; padding-right: 10px;"/>
+                            #{photo.auction.category.name}
                         </h:column>
                     </div>
                     <div>
                         <h:column style="align-self: center; font-size: large; padding: 0 5px;">
                             <h:outputLabel value="section: " style="float:left; padding-right: 10px;"/>
-                            #{auction.category.section.name}
+                            #{photo.auction.category.section.name}
                         </h:column>
                     </div>
                     <div>
                         <h:column style="align-self: center; font-size: large">
-                            #{auction.owner.username}
+                            <h:outputLabel value="Username : " style="float:left; padding-right: 10px;"/>
+                            #{photo.auction.owner.username}
                         </h:column>
-                    </div>w
+                    </div>
                     <div>
                         <h:column>
                             <h:button value="Edit Section" outcome="changeSection.xhtml">
-                                <f:param name="sectionID" value="#{auction.category.getSection().id}"/>
+                                <f:param name="sectionID" value="#{photo.auction.category.getSection().id}"/>
                             </h:button>
                         </h:column>
                     </div>
                     <div>
                         <h:column>
                             <h:button value="Edit Auction" outcome="changeAuction.xhtml">
-                                <f:param name="auctionID" value="#{auction.id}"/>
+                                <f:param name="auctionID" value="#{photo.auction.id}"/>
+                            </h:button>
+                        </h:column>
+                    </div>
+                    <div>
+                        <h:column>
+                            <h:button value="Delete Auction" outcome="deleteAuction.xhtml">
+                                <f:param name="auctionID" value="#{photo.auction.id}"/>
                             </h:button>
                         </h:column>
                     </div>

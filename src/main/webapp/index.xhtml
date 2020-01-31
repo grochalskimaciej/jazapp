@@ -22,12 +22,14 @@
 
     <div class="card-footer">
         <a href="addNewAuction.xhtml" class="link">Add Auction</a>
-        <a href="showMyActions.xhtml" class="link">Show my Auctions</a>
+        <a href="showMyAuctions.xhtml" class="link">Show my Auctions</a>
         <a href="showAuctions.xhtml" class="link">Show all Auctions</a>
         <a href="showAllSections.xhtml" class="link">Show all Sections</a>
     </div>
     <br/>
-    <h:commandButton action="#{loginRequest.logout}" value="Logout" style="color:red; width:80px;" />
+    <h:form>
+        <h:commandButton action="#{loginRequest.logout}" value="Logout" style="color:red; width:80px;" />
+    </h:form>
 
 </h:body>
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:form="http://www.springframework.org/tags/form"
+
+>
+<f:view>
+    <f:metadata>
+        <f:viewParam name="auctionID" value="#{auctionController.id}"/>
+    </f:metadata>
+
+    <h:head>
+        <title>Allezon</title>
+        <h:outputStylesheet name="main.css" library="css" />
+    </h:head>
+
+    <h:body>
+        <h:form>
+            <h2>Click if you want to delete auction</h2>
+
+            <h:commandButton action="#{auctionController.deleteAuction}" value="Delete Auction" style="color:red; width:160px;" >
+                <f:param name="auctionID" value="#{auctionController.id}" />
+            </h:commandButton>
+
+            <div class="card-footer">
+                <a href="showMyAuctions.xhtml" class="link">Back to auctions</a><br/>
+                <a href="index.xhtml" class="link">Back to profile page</a><br/>
+            </div>
+        </h:form>
+    </h:body>
+</f:view>
+</html>

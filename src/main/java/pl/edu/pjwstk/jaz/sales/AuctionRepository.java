@@ -8,12 +8,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 
 
 @ApplicationScoped
-public class AuctionRepository {
+public class AuctionRepository implements Serializable {
     @PersistenceContext
     EntityManager em;
 
@@ -24,14 +24,19 @@ public class AuctionRepository {
     public AuctionEntity findAuctionByID(Long auctionID) { return em.find(AuctionEntity.class, auctionID); }
 
     @Transactional
-    public void saveSection(@NotNull SectionEntity section) {
-        if (section.getId()!=null) { em.merge(section); }
+    public void deleteAuction(AuctionEntity auction){
+        em.remove(em.contains(auction) ? auction : em.merge(auction));
+    }
+
+    @Transactional
+    public void saveSection(SectionEntity section) {
+        if (section.getId() != null) { em.merge(section); }
         else { em.persist(section); }
     }
 
     @Transactional
-    public void saveAuction(@NotNull AuctionEntity auction) {
-        if (auction.getId()!=null){ em.merge(auction); }
+    public void saveAuction(AuctionEntity auction) {
+        if (auction.getId() != null){ em.merge(auction); }
         else { em.persist(auction); }
     }
 
@@ -54,27 +59,59 @@ public class AuctionRepository {
 
         em.persist(auctionEntity);
 
+        if(!auctionRequest.getImage1().isEmpty()){
+            PhotoEntity photoEntity = new PhotoEntity();
+            photoEntity.setLink(auctionRequest.getImage1());
+            photoEntity.setAuction(auctionEntity);
+            em.persist(photoEntity);
+        }
 
-//        List<byte[]> photoList = auctionRequest.getImages();
-//        for(byte[] photoFile: photoList)
-//        {
-//            PhotoEntity photoEntity = new PhotoEntity(photoFile);
-//            photoEntity.setAuction(auctionEntity);
-//            em.persist(photoEntity);
-//        }
+        if(!auctionRequest.getImage2().isEmpty()){
+            PhotoEntity photoEntity = new PhotoEntity();
+            photoEntity.setLink(auctionRequest.getImage2());
+            photoEntity.setAuction(auctionEntity);
+            em.persist(photoEntity);
+        }
+
+        if(!auctionRequest.getImage3().isEmpty()){
+            PhotoEntity photoEntity = new PhotoEntity();
+            photoEntity.setLink(auctionRequest.getImage3());
+            photoEntity.setAuction(auctionEntity);
+            em.persist(photoEntity);
+        }
+
+        if(!auctionRequest.getImage4().isEmpty()){
+            PhotoEntity photoEntity = new PhotoEntity();
+            photoEntity.setLink(auctionRequest.getImage4());
+            photoEntity.setAuction(auctionEntity);
+            em.persist(photoEntity);
+        }
     }
 
     public List<SectionEntity> findAllSections() {
         return em.createQuery("FROM SectionEntity ", SectionEntity.class).getResultList();
     }
 
-    public List<AuctionEntity> findAllAuctions() {
-        return em.createQuery("FROM AuctionEntity", AuctionEntity.class).getResultList();
+//    public List<AuctionEntity> findAllAuctions() {
+//        return em.createQuery("FROM AuctionEntity", AuctionEntity.class).getResultList();
+//    }
+//
+//    public List<AuctionEntity> findMyAuctions(String ownerUsername) {
+//        Query query = em.createQuery("SELECT u FROM AuctionEntity u WHERE u.owner.username = :ownerUsername", AuctionEntity.class);
+//        return query.setParameter("ownerUsername", ownerUsername).getResultList();
+//    }
+
+    public List<PhotoEntity> findMyPhotos(String ownerUsername){
+        Query photos = em.createQuery("SELECT u FROM PhotoEntity u WHERE u.auction.owner.username = :ownerUsername ORDER BY auction.id DESC", PhotoEntity.class);
+        return photos.setParameter("ownerUsername", ownerUsername).getResultList();
     }
 
-    public List<AuctionEntity> findMyAuctions(String ownerUsername) {
-        Query query = em.createQuery("SELECT u FROM AuctionEntity u WHERE u.owner.username = :ownerUsername", AuctionEntity.class);
-        return query.setParameter("ownerUsername", ownerUsername).getResultList();
+    public List<PhotoEntity> findAllPhotos(){
+        return em.createQuery("FROM PhotoEntity ORDER BY auction.id DESC", PhotoEntity.class).getResultList();
+    }
+
+    public List<PhotoEntity> moreImages(){
+        return null;
     }
 }
 

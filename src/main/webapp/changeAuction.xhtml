@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:form="http://www.springframework.org/tags/form"
 
 >
 <f:view>
@@ -24,13 +24,16 @@
     <h:form>
         <h2>Change Auction</h2>
 
-        <h:inputText value="#{auctionController.auction.title}" name="title" a:placeholder="Change Title:" ><f:validateRequired for="title"/></h:inputText><br/>
+        <h:inputText value="#{auctionRequest.title}" name="title" a:placeholder="Change Title:"><f:validateRequired for="title"/></h:inputText><br/>
 
-        <h:inputText value="#{auctionController.auction.description}" name="description" a:placeholder="Change Description:"/><br/>
+        <h:inputText value="#{auctionRequest.description}" name="description" a:placeholder="Change Description:"/><br/>
 
-        <h:inputText value="#{auctionController.auction.price}" name="price" a:placeholder="Change Price:"><f:validateRequired for="price"/></h:inputText><br/>
+        <h:inputText value="#{auctionRequest.price}" name="price" a:placeholder="Change Price:"><f:validateRequired for="price"/></h:inputText><br/>
 
-        <h:commandButton action="#{auctionController.saveAuction}" value="Edit Auction" style="color:red; width:160px;" />
+        <h:commandButton action="#{auctionController.saveAuction}" value="Save Auction" style="color:red; width:160px;" >
+        <f:param name="auctionID" value="#{auctionController.id}" />
+        </h:commandButton>
+
     </h:form>
 
     <h:form>
