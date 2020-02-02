@@ -25,6 +25,14 @@ public class AuctionRepository implements Serializable {
     public CategoryEntity findCategoryByID(Long categoryID) { return em.find(CategoryEntity.class, categoryID); }
 
     @Transactional
+    public boolean isAdmin(String username){
+        Query query = em.createQuery("SELECT u FROM ProfileEntity u WHERE u.username = :username AND u.isAdmin = true", ProfileEntity.class);
+        List<ProfileEntity> list = query.setParameter("username", username).getResultList();
+
+        return !list.isEmpty();
+    }
+
+    @Transactional
     public void deleteAuction(AuctionEntity auction){
         em.remove(em.contains(auction) ? auction : em.merge(auction));
     }

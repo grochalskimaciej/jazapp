@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.List;
 
-//@ManagedBean
-//@SessionScoped
 @Named
 @RequestScoped
 public class AuctionController implements Serializable {
@@ -78,19 +76,6 @@ public class AuctionController implements Serializable {
 
         return "index";
     }
-
-    public CategoryEntity getCategory(){
-        if (id == null) { category = new CategoryEntity(); }
-        else { category = auctionRepository.findCategoryByID(id); }
-
-        return category;
-    }
-    public String saveCategory() {
-        auctionRepository.saveCategory(category);
-
-        return "index";
-    }
-
     public String addAuction() {
         var session = request.getSession(false);
         String sessionUsername = (String)session.getAttribute("username");
@@ -104,126 +89,40 @@ public class AuctionController implements Serializable {
         auctionRepository.deleteAuction(auction);
         return "showMyAuctions";
     }
-    public String addCategory(){
-        auctionRepository.addCategory();
 
-        FacesContext.getCurrentInstance().getExternalContext().getFlash()
-                .put("category", "category added succesfully");
+    public CategoryEntity getCategory(){
+        if (id == null) { category = new CategoryEntity(); }
+        else { category = auctionRepository.findCategoryByID(id); }
+
+        return category;
+    }
+    public String addCategory(){
+        String username = sessionUsername();
+        if(auctionRepository.isAdmin(username)){
+            auctionRepository.addCategory();
+
+            FacesContext.getCurrentInstance().getExternalContext().getFlash()
+                    .put("category", "category added succesfully");
+        } else {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash()
+                    .put("isNotAdmin", "You have to be an admin to add category");
+        }
         return "index";
     }
-    ////////////////////////////////////////////////////
-//    private List<AuctionRequest> uploadFiles = null;
-//
-//    @PostConstruct
-//    public void init(){
-//        if(uploadFiles==null){
-//            uploadFiles = new ArrayList<AuctionRequest>();
-//        }
-//    }
-//
-//    public void uploadFiles() throws IOException, ServletException {
-//        Collection<Part> parts = getParts();
-//        for(Part part: parts){
-//            if(part.getSubmittedFileName()!=null){
-//                AuctionRequest fileBean = new AuctionRequest();
-//                fileBean.setFileName((part.getSubmittedFileName()));
-//                uploadFiles.add(fileBean);
-//            }
-//        }
-//    }
-//
-//    public Collection<Part> getParts() throws IOException, ServletException {
-//        FacesContext context = FacesContext.getCurrentInstance();
-//        HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
-//        return request.getParts();
-//    }
 
-//    @Transactional
-//    public List<AuctionEntity> getMyAuctionList() {
-//        var session = request.getSession(false);
-//        String sessionUsername = (String)session.getAttribute("username");
-//
-//        Query getAuctions = em.createQuery("SELECT u FROM AuctionEntity u WHERE u.owner.username = :sessionUsername", AuctionEntity.class);
-//        List<AuctionEntity> auctions = getAuctions.setParameter("sessionUsername", sessionUsername).getResultList();
-//
-//        return auctions;
-//    }
-//
-//    @Transactional
-//    public String editAuction(){
-//        var session = request.getSession(false);
-//        String sessionUsername = (String)session.getAttribute("username");
-//
-//
-//        Query query = em.createQuery("SELECT u FROM ProfileEntity u WHERE u.username = :sessionUsername", ProfileEntity.class);
-//        ProfileEntity owner = (ProfileEntity)query.setParameter("sessionUsername", sessionUsername).getSingleResult();
-//
-//
-//        Query findID = em.createQuery("SELECT AuctionEntity FROM AuctionEntity a WHERE a.id = :auctionId", ProfileEntity.class);
-//        AuctionEntity auctionEntity = (AuctionEntity)findID.getSingleResult();
-//
-//        auctionEntity.setOwner(owner);
-//
-//        CategoryEntity categoryEntity = new CategoryEntity(auctionRequest.getCategoryName());
-//        SectionEntity sectionEntity = new SectionEntity(auctionRequest.getSectionName());
-//        categoryEntity.setSection(sectionEntity);
-//        auctionEntity.setCategory(categoryEntity);
-//
-//        auctionEntity.setTitle(auctionRequest.getTitle());
-//        auctionEntity.setDescription(auctionRequest.getDescription());
-//        auctionEntity.setPrice(auctionRequest.getPrice());
-//
-//        em.merge(auctionEntity);
-//
-//
-//        List<byte[]> photoList = auctionRequest.getImages();
-//        for(byte[] photoFile: photoList)
-//        {
-//            PhotoEntity photoEntity = new PhotoEntity(photoFile);
-//            photoEntity.setAuction(auctionEntity);
-//            em.merge(photoEntity);
-//        }
-//
-//        return "index";
-//    }
+    public String saveCategory() {
+        String username = sessionUsername();
+        if(auctionRepository.isAdmin(username)){
+            auctionRepository.saveCategory(category);
+        } else {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash()
+                    .put("isNotAdmin", "You have to be an admin to edit category");
+        }
+        return "index";
+    }
 
-
-//TODO zoptymalizowac
-
-//    @Transactional
-//    public String addSection(){
-//        String sName = auctionRequest.getSectionName();
-//        Query findSection = em.createQuery("SELECT s FROM SectionEntity s WHERE s.name = :sName", SectionEntity.class);
-//        List<SectionEntity> section = findSection.setParameter("sName", sName).getResultList();
-//
-//        if(section.isEmpty()){
-//            SectionEntity sectionEntity = new SectionEntity(auctionRequest.getSectionName());
-//            em.persist(sectionEntity);
-//        }
-//
-//        return "index";
-//    }
-
-//TODO zoptymalizowac
-
-//    @Transactional
-//    public String editSection() {
-//
-//        Locale sectionID = new Locale(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("sectionID"));
-//        Long id = 1L;
-//        SectionEntity sectionEntity = em.find(SectionEntity.class, id);
-//        em.merge(sectionEntity);
-//
-//        String sectionName = auctionRequest.getSectionName();
-//
-//        Query findSection = em.createQuery("SELECT s FROM SectionEntity s WHERE s.id = :sectionID", SectionEntity.class);
-//        List<SectionEntity> section = findSection.setParameter("sectionID", sectionID).getResultList();
-//
-//        for(SectionEntity s : section){
-//            s.setName(sectionName);
-//            em.merge(s);
-//        }
-//
-//        return "index";
-//    }
+    public String sessionUsername(){
+        var session = request.getSession(false);
+        return (String)session.getAttribute("username");
+    }
 }

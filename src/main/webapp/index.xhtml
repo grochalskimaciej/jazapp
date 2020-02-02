@@ -20,6 +20,7 @@
         <p style="color:red; font-size: 24px;">Welcome #{session.getAttribute("username")}</p>
     </h:form>
     <h:outputLabel value="#{flash['category']}" style="color: white"/>
+    <h:outputLabel value="#{flash['isNotAdmin']}" style="color: red"/>
     <div class="card-footer">
         <a href="addNewAuction.xhtml" class="link">Add Auction</a>
         <a href="showMyAuctions.xhtml" class="link">Show my Auctions</a>
@@ -29,7 +30,7 @@
     </div>
     <br/>
     <h:form>
-        <h:commandButton action="#{loginRequest.logout}" value="Logout" style="color:red; width:80px;" />
+        <h:commandButton action="#{loginController.logout}" value="Logout" style="color:red; width:80px;" />
     </h:form>
 
 </h:body>

@@ -37,14 +37,19 @@ public class ProfileEntity implements Serializable {
     @Column(name="birthDate")
     private String birthDate;
 
+    @NotNull
+    @Column(name="isAdmin")
+    private boolean isAdmin;
+
     public ProfileEntity() { }
-    public ProfileEntity(String firstName, String lastName, String username, String password, String email, String birthDate) {
+    public ProfileEntity(String firstName, String lastName, String username, String password, String email, String birthDate, boolean isAdmin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
         this.birthDate = birthDate;
+        this.isAdmin = isAdmin;
     }
 
     public Long getId() { return id; }
@@ -54,4 +59,5 @@ public class ProfileEntity implements Serializable {
     public String getPassword() { return password; }
     public String getEmail() { return email; }
     public String getBirthDate() { return birthDate; }
+    public boolean getIsAdmin() {return isAdmin;}
 }

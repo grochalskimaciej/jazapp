@@ -11,9 +11,6 @@ public class UserContext {
     @Inject
     private HttpServletRequest request;
 
-    @Inject
-    private ProfileRepository profileRepository;
-
     public String getUsername() {
         var session = request.getSession(false);
         var usernameObj = session.getAttribute("username");
@@ -22,13 +19,5 @@ public class UserContext {
         }
 
         return (String) usernameObj;
-    }
-
-    public String getFullName() {
-        var username = getUsername();
-
-        var user = profileRepository.requireUser(username);
-
-        return String.format("%s %s", user.getFirstName(), user.getLastName());
     }
 }

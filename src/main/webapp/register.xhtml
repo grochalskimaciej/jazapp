@@ -14,7 +14,8 @@
     <h:outputStylesheet name="css/bootstrap.css" library="bootstrap"/>
 </h:head>
 <h:body>
-
+    <h:outputLabel value="#{flash['already exists']}" style="color: red"/>
+    <h:outputLabel value="#{flash['wrong password']}" style="color: red"/>
     <div class="container">
         <div class="card">
             <div class="card-header">
