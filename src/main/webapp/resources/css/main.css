@@ -19,13 +19,14 @@ html,body {
     margin-left: auto;
     font-size: 20px;
     font-weight: 700;
-    color: blue;
     margin-top:20px;
     width:200px;
+    text-decoration: underline;
+    color: #007bff;
 }
 
 .link:hover{
-    color: darkblue;
+    color: white;
 }
 
 .input{

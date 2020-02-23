@@ -21,14 +21,14 @@ public class LoginController{
             return "index";
         } else {
             FacesContext.getCurrentInstance().getExternalContext().getFlash()
-                    .put("error message", "Incorrect username or password");
-            return "/login.xhtml?faces-redirect=true";
+                    .put("login error", "Incorrect username or password");
+            return "login";
         }
     }
 
     public String logout() {
         profileService.logout();
 
-        return "login.xhtml?faces-redirect=true";
+        return "login";
     }
 }

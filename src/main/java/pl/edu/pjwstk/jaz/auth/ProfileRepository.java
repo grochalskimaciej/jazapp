@@ -15,7 +15,7 @@ public class ProfileRepository {
     private EntityManager em;
 
     Optional<ProfileEntity> findUserByUsername(String username) {
-        Query user = em.createQuery("from ProfileEntity where username = :username", ProfileEntity.class);
+        Query user = em.createQuery("FROM ProfileEntity where username = :username", ProfileEntity.class);
         List<ProfileEntity> list = user.setParameter("username", username).getResultList();
 
         if(!list.isEmpty()){
